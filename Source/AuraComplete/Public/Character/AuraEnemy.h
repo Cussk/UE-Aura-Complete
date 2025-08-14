@@ -4,14 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
+#include "Interaction/TargetInterface.h"
 #include "AuraEnemy.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class AURACOMPLETE_API AAuraEnemy : public AAuraCharacterBase
+class AURACOMPLETE_API AAuraEnemy : public AAuraCharacterBase, public ITargetInterface
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual void HighlightActor() override;
+	virtual void UnHighlightActor() override;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bHighlightActor;
 };

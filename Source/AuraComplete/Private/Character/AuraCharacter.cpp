@@ -19,6 +19,8 @@ void AAuraCharacter::SetupTopDownCamera()
 	SpringArmComponent->SetupAttachment(RootComponent);
 	SpringArmComponent->SetRelativeRotation(FRotator(-45.f, 0.f, 0.f));
 	SpringArmComponent->TargetArmLength = 750.f;
+
+	//Prevent spring arm rotating with player
 	SpringArmComponent->bUsePawnControlRotation = false;
 	SpringArmComponent->bInheritPitch = false;
 	SpringArmComponent->bInheritRoll = false;
