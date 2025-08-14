@@ -2,10 +2,13 @@
 
 #include "Character/AuraCharacterBase.h"
 
-// Sets default values
 AAuraCharacterBase::AAuraCharacterBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+
+	WeaponSkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponSkeletalMeshComponent");
+	WeaponSkeletalMeshComponent->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
+	WeaponSkeletalMeshComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AAuraCharacterBase::BeginPlay()
