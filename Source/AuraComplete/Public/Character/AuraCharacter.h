@@ -19,6 +19,8 @@ class AURACOMPLETE_API AAuraCharacter : public AAuraCharacterBase
 
 public:
 	AAuraCharacter();
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 
 protected:
 	UPROPERTY(EditAnywhere, Category="Camera")
@@ -30,4 +32,5 @@ protected:
 private:
 	void SetupTopDownCamera();
 	void RotatePlayerToMovement();
+	void InitAbilityActorInfo();
 };
