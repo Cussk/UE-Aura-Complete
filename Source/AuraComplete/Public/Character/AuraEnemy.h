@@ -23,4 +23,7 @@ public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 	// End Target Interface
+
+protected:
+	virtual void InitAbilityActorInfo() override;
 };

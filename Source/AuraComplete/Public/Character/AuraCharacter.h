@@ -23,6 +23,8 @@ public:
 	virtual void OnRep_PlayerState() override;
 
 protected:
+	virtual void InitAbilityActorInfo() override;
+	
 	UPROPERTY(EditAnywhere, Category="Camera")
 	TObjectPtr<UCameraComponent> CameraActor;
 
@@ -32,5 +34,5 @@ protected:
 private:
 	void SetupTopDownCamera();
 	void RotatePlayerToMovement();
-	void InitAbilityActorInfo();
+	
 };
