@@ -29,7 +29,6 @@ void AAuraEnemy::BeginPlay()
 	InitAbilityActorInfo();
 }
 
-
 void AAuraEnemy::HighlightActor()
 {
 	GetMesh()->SetRenderCustomDepth(true);
@@ -40,6 +39,11 @@ void AAuraEnemy::UnHighlightActor()
 {
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
+}
+
+int32 AAuraEnemy::GetCharacterLevel()
+{
+	return Level;
 }
 
 void AAuraEnemy::InitAbilityActorInfo()
