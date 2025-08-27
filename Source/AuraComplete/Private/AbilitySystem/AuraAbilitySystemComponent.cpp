@@ -9,7 +9,7 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 }
 
 void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent,
-                                                const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle)
+	const FGameplayEffectSpec& GameplayEffectSpec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const
 {
 	FGameplayTagContainer TagContainer;
 	GameplayEffectSpec.GetAllAssetTags(TagContainer);

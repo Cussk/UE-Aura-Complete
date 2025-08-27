@@ -12,17 +12,17 @@
  */
 namespace FAuraGameplayTags
 {
-	// Parent Tags
+	// Parents
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Message);
 	
-	// Primary
+	// Primary Attributes
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Primary_Strength);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Primary_Intelligence);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Primary_Resilience);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Primary_Vigor);
  
-	// Secondary
+	// Secondary Attributes
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Secondary_Armor);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Secondary_ArmorPenetration);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Secondary_BlockChance);
@@ -34,7 +34,7 @@ namespace FAuraGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Secondary_MaxHealth);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Secondary_MaxMana);
  
-	// Vitals
+	// Vital Attributes
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Vitals_Health);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Vitals_Mana);
 
