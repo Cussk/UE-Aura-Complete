@@ -2,10 +2,9 @@
 
 
 #include "UI/WidgetController/OverlayWidgetController.h"
-
+#include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
-#include "AbilitySystem/AuraGameplayTags.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -45,7 +44,7 @@ void UOverlayWidgetController::BindEffectAssetTagCallback()
 		{
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				if (Tag.MatchesTag(FMyGameplayTags::Message))
+				if (Tag.MatchesTag(FAuraGameplayTags::TAG_Message))
 				{
 					const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag);
 				    MessageWidgetRowDelegate.Broadcast(*Row);
