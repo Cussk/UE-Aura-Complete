@@ -6,10 +6,27 @@
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
+#include "AuraGameplayTags.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	
+	// Primary Attributes
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Primary_Strength, GetStrengthAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Primary_Intelligence, GetIntelligenceAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Primary_Resilience, GetResilienceAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Primary_Vigor, GetVigorAttribute);
+
+	//Secondary Attributes
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_Armor, GetArmorAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_ArmorPenetration, GetArmorPenetrationAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_BlockChance, GetBlockChanceAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_CriticalHitChance, GetCriticalHitChanceAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_CriticalHitDamage, GetCriticalHitDamageAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_CriticalHitResistance, GetCriticalHitResistanceAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_HealthRegeneration, GetHealthRegenerationAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_ManaRegeneration, GetManaRegenerationAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_MaxHealth, GetMaxHealthAttribute);
+	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Secondary_MaxMana, GetMaxManaAttribute);
 }
 
 /*
