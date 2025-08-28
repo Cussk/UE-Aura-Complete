@@ -49,22 +49,21 @@ private:
 	TSubclassOf<UAttributeMenuWidgetController> AbilityMenuWidgetControllerClass;
 
 	template <class T>
-	T* GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters, UAuraWidgetController* AuraWidgetController, TSubclassOf<T> AuraWidgetControllerClass);
+	T* GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters, TObjectPtr<T>& AuraWidgetController, TSubclassOf<T> AuraWidgetControllerClass);
 };
 
-template <class T>
-T* AAuraHUD::GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters, UAuraWidgetController* AuraWidgetController, TSubclassOf<T> AuraWidgetControllerClass)
+template <class ControllerT>
+ControllerT* AAuraHUD::GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters,
+	TObjectPtr<ControllerT>& AuraWidgetController, TSubclassOf<ControllerT> AuraWidgetControllerClass)
 {
 	if (AuraWidgetController == nullptr)
 	{
-		T* AuraSubWidgetController = NewObject<T>(this, AuraWidgetControllerClass);
-		AuraSubWidgetController->SetWidgetControllerParameters(WidgetControllerParameters);
-		AuraSubWidgetController->BindCallbacksToDependencies();
+		AuraWidgetController = NewObject<ControllerT>(this, AuraWidgetControllerClass); //Pass AuraWidgetController pointer by reference so it can be assigned a new pointer
+		AuraWidgetController->SetWidgetControllerParameters(WidgetControllerParameters);
+		AuraWidgetController->BindCallbacksToDependencies();
 
-		return AuraSubWidgetController;
+		return AuraWidgetController;
 	}
 
-	T* TypedController = Cast<T>(AuraWidgetController);
-	check(TypedController);
-	return TypedController;
+	return CastChecked<ControllerT>(AuraWidgetController);
 }

@@ -8,7 +8,6 @@
 
 /**
  * Central repository of native gameplay tags.
- * Add higher level tags here, define more specific instances in Data Tables in Editor
  */
 namespace FAuraGameplayTags
 {
