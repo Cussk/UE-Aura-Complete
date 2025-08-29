@@ -28,3 +28,11 @@ UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Secondary_MaxMa
 // Vital Attributes
 UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Vitals_Health, "Attributes.Vitals.Health", "Amount of damage a player can take before death");
 UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Vitals_Mana, "Attributes.Vitals.Mana", "Used for casting spells and abilities");
+
+//Input Tags
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_LMB, "InputTag.LMB", "Left Mouse Button Input Tag");
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_RMB, "InputTag.RMB", "Right Mouse Button Input Tag");
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_1, "InputTag.1", "Key 1 Input Tag");
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_2, "InputTag.2", "Key 2 Input Tag");
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_3, "InputTag.3", "Key 3 Input Tag");
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_4, "InputTag.4", "Key 4 Input Tag");
