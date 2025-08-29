@@ -16,6 +16,10 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 	return GetWidgetController(WidgetControllerParameters, AbilityMenuWidgetController, AbilityMenuWidgetControllerClass);
 }
 
+/**
+ * Creates the main HUD Overlay
+ * Sets the Widget Controller, Binds Callbacks, and Adds onscreen
+ */
 void AAuraHUD::InitOverlay(APlayerController* PlayerController, APlayerState* PlayerState,
                            UAbilitySystemComponent* AbilitySystemComponent, UAttributeSet* AttributeSet)
 {

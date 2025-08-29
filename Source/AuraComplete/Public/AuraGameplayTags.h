@@ -8,6 +8,7 @@
 
 /**
  * Central repository of native gameplay tags.
+ * Declare Macro here and Define macro with or without comment in .cpp
  */
 namespace FAuraGameplayTags
 {

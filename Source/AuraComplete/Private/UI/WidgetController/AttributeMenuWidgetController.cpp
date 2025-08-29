@@ -4,6 +4,9 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/AttributeInfo.h"
 
+/**
+ * Binds BP Widgets to the delegate, event subscribed to in Blueprint Editor
+ */
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
 	UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
@@ -18,6 +21,9 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 	}
 }
 
+/**
+ * Fires the initial call for Attirbute Info on widget creation
+ */
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
@@ -28,6 +34,10 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 	}
 }
 
+/**
+ * Gets an FAuraAttributeInfo Struct and sets its current numeric value
+ * Broadcasts the struct to the widgets that contain the matching AttributeTag
+ */
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
 {
 	FAuraAttributeInfo Info = AttributeInformation->FindAttributeInfoForTag(AttributeTag);

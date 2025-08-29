@@ -7,7 +7,9 @@
 #include "AuraUserWidget.generated.h"
 
 /**
- * 
+ * Base class for project UserWidgets
+ * Blueprint versions created for specialized Widgets
+ * Facilitates setting of the Widget's controller in C++ or BP
  */
 UCLASS()
 class AURACOMPLETE_API UAuraUserWidget : public UUserWidget

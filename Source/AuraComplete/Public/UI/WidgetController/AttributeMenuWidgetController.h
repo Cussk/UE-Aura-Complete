@@ -14,9 +14,11 @@ class UAttributeInfo;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FAuraAttributeInfo&, Info);
 
 /**
- * 
+ * Top level controller for Attribute Menu defines and binds
+ * FAttributeInfoSignature delegate for sending attribute data to onscreen panel widgets
+ * Blueprint version is created to set required editor/blueprint data types
  */
-UCLASS(BlueprintType, BLueprintable)
+UCLASS(BlueprintType, Blueprintable)
 class AURACOMPLETE_API UAttributeMenuWidgetController : public UAuraWidgetController
 {
 	GENERATED_BODY()

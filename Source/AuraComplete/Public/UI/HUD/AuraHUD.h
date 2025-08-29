@@ -13,8 +13,10 @@ class UAttributeSet;
 class UOverlayWidgetController;
 class UAuraUserWidget;
 struct FWidgetControllerParameters;
+
 /**
- * 
+ * Main HUD class
+ * Blueprint version allows for creation of other blueprint on it and setting of Widget Controller classes
  */
 UCLASS()
 class AURACOMPLETE_API AAuraHUD : public AHUD
@@ -29,6 +31,9 @@ public:
 	void InitOverlay(APlayerController* PlayerController, APlayerState* PlayerState, UAbilitySystemComponent* AbilitySystemComponent, UAttributeSet* AttributeSet);
 
 private:
+
+	template <class T>
+	T* GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters, TObjectPtr<T>& AuraWidgetController, TSubclassOf<T> AuraWidgetControllerClass);
 
 	UPROPERTY()
 	TObjectPtr<UAuraUserWidget> OverlayWidget;
@@ -47,11 +52,18 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UAttributeMenuWidgetController> AbilityMenuWidgetControllerClass;
-
-	template <class T>
-	T* GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters, TObjectPtr<T>& AuraWidgetController, TSubclassOf<T> AuraWidgetControllerClass);
 };
 
+/**
+ *	Generic WidgetController pointer getter, creates or casts to any child of AuraWidgetController
+ * 
+ * @tparam ControllerT Controller child to be returned
+ * @param WidgetControllerParameters Struct const reference  providing Parameters controller needs to be initialized
+ * @param AuraWidgetController Generic AuraWidgetController pointer reference can be any child of AUraWidgetController,
+ * sets desired child version in AuraHUD after creating for easier Getting
+ * @param AuraWidgetControllerClass Generic controller class, can be any child class of AuraWidgetController
+ * @return Desired pointer to child of AuraWidgetController
+ */
 template <class ControllerT>
 ControllerT* AAuraHUD::GetWidgetController(const FWidgetControllerParameters& WidgetControllerParameters,
 	TObjectPtr<ControllerT>& AuraWidgetController, TSubclassOf<ControllerT> AuraWidgetControllerClass)

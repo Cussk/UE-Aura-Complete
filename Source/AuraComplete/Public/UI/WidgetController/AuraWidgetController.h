@@ -8,6 +8,9 @@
 class UAttributeSet;
 class UAbilitySystemComponent;
 
+/**
+ * Struct for passing parameters controllers will need to be created
+ */
 USTRUCT(BlueprintType)
 struct FWidgetControllerParameters
 {
@@ -32,7 +35,7 @@ struct FWidgetControllerParameters
 };
 
 /**
- * 
+ * Base Widget Controller class 
  */
 UCLASS()
 class AURACOMPLETE_API UAuraWidgetController : public UObject
