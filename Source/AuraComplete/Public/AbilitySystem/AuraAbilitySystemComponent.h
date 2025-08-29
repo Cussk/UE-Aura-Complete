@@ -19,6 +19,8 @@ class AURACOMPLETE_API UAuraAbilitySystemComponent : public UAbilitySystemCompon
 public:
 	void AbilityActorInfoSet();
 
+	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartingAbilities);
+
 	FEffectAssetTags EffectAssetTags;
 
 protected:
