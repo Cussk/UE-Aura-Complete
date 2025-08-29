@@ -204,7 +204,7 @@ void AAuraPlayerController::SetAutoRunSpline()
 			for (const FVector& PointLocation : NavigationPath->PathPoints)
 			{
 				SplineComponent->AddSplinePoint(PointLocation, ESplineCoordinateSpace::World);
-				DrawDebugSphere(GetWorld(), PointLocation, 1.f, 8, FColor::Green, false, 5.f);
+				//DrawDebugSphere(GetWorld(), PointLocation, 3.f, 8, FColor::Green, false, 5.f);
 			}
 
 			if (NavigationPath->PathPoints.Num() > 0)
