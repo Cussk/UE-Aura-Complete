@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AuraGameplayTags.h"
 #include "GameplayTagContainer.h"
 #include "GameFramework/Controller.h"
 #include "AuraPlayerController.generated.h"
@@ -12,6 +13,7 @@ class UInputMappingContext;
 class UInputAction;
 class ITargetInterface;
 class UAuraAbilitySystemComponent;
+class USplineComponent;
 
 /**
  * 
@@ -22,7 +24,8 @@ class AURACOMPLETE_API AAuraPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
-AAuraPlayerController();
+	AAuraPlayerController();
+	void AutoRunToDestination();
 	virtual void PlayerTick(float DeltaTime) override;
 	
 protected:
@@ -30,21 +33,23 @@ protected:
 	virtual void SetupInputComponent() override;
 
 private:
+
+	static bool IsLMB(const FGameplayTag& InputTag){ return InputTag.MatchesTagExact(FAuraGameplayTags::TAG_InputTag_LMB); }
+
+	void Move(const struct FInputActionValue& InputActionValue);
+	void CursorTrace();
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void SetAutoRunSpline();
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
+	void MoveToHitPoint();
+	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
+	
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> AuraInputContext;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
-
-	void Move(const struct FInputActionValue& InputActionValue);
-	void CursorTrace();
-
-	TScriptInterface<ITargetInterface> LastActor;
-	TScriptInterface<ITargetInterface> CurrentActor;
-
-	void AbilityInputTagPressed(FGameplayTag InputTag);
-	void AbilityInputTagReleased(FGameplayTag InputTag);
-	void AbilityInputTagHeld(FGameplayTag InputTag);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
@@ -52,5 +57,22 @@ private:
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
 
-	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> SplineComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AutoRunAcceptanceRadius = 50.f;
+
+	FHitResult CursorHit;
+
+	//Target Variables
+	TScriptInterface<ITargetInterface> LastTargetActor;
+	TScriptInterface<ITargetInterface> CurrentTargetActor;
+
+	//Movement Variables
+	FVector CachedDestination = FVector::ZeroVector;
+	float FollowTime = 0.f;
+	float ShortPressThreshold = 0.5f;
+	bool bAutoRunning = false;
+	bool bTargeting = false;
 };

@@ -2,22 +2,19 @@
 
 
 #include "Player/AuraPlayerController.h"
-
 #include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "NavigationPath.h"
+#include "NavigationSystem.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/TargetInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
 	bReplicates = true;
-}
-
-void AAuraPlayerController::PlayerTick(float DeltaTime)
-{
-	Super::PlayerTick(DeltaTime);
-	CursorTrace();
+	SplineComponent = CreateDefaultSubobject<USplineComponent>("SplineComponent");
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -42,6 +39,37 @@ void AAuraPlayerController::BeginPlay()
 	SetInputMode(InputModeData);
 }
 
+void AAuraPlayerController::PlayerTick(const float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+	CursorTrace();
+	AutoRunToDestination();
+}
+
+/*
+ * Controlled Pawn will move along spline to position within acceptance radius of destination
+ */
+void AAuraPlayerController::AutoRunToDestination()
+{
+	if (!bAutoRunning) return;
+	
+	if (APawn* ControlledPawn = GetPawn())
+	{
+		const FVector LocationOnSpline = SplineComponent->FindLocationClosestToWorldLocation(ControlledPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+		const FVector Direction = SplineComponent->FindDirectionClosestToWorldLocation(LocationOnSpline, ESplineCoordinateSpace::World);
+		ControlledPawn->AddMovementInput(Direction);
+
+		const float DistanceToDestination = (LocationOnSpline - CachedDestination).Length();
+		if (DistanceToDestination <= AutoRunAcceptanceRadius)
+		{
+			bAutoRunning = false;
+		}
+	}
+}
+
+/*
+ * Bind Actions to input component
+ */
 void AAuraPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -68,75 +96,128 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 }
 
 /*
- * Trace mouse pointer for highlighting actorsu
+ * Trace mouse pointer for highlighting actors
  */
 void AAuraPlayerController::CursorTrace()
-{
-	FHitResult CursorHit;
+{	
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
-	LastActor = CurrentActor;
-	CurrentActor = CursorHit.GetActor();
+	LastTargetActor = CurrentTargetActor;
+	CurrentTargetActor = CursorHit.GetActor();
 
-	/**
-	 * Line trace from cursor. There are several scenarios:
-	 *  A. LastActor is null && ThisActor is null
-	 *		- Do nothing
-	 *	B. LastActor is null && ThisActor is valid
-	 *		- Highlight ThisActor
-	 *	C. LastActor is valid && ThisActor is null
-	 *		- UnHighlight LastActor
-	 *	D. Both actors are valid, but LastActor != ThisActor
-	 *		- UnHighlight LastActor, and Highlight ThisActor
-	 *	E. Both actors are valid, and are the same actor
-	 *		- Do nothing
-	 */
-
-	if (LastActor == nullptr)
+	if (LastTargetActor != CurrentTargetActor)
 	{
-		if (CurrentActor != nullptr)
+		if (LastTargetActor)
 		{
-			//Case B
-			CurrentActor->HighlightActor();
+			LastTargetActor->UnHighlightActor();
 		}
-		//Case A
+		
+		if (CurrentTargetActor)
+		{
+			CurrentTargetActor->HighlightActor();
+		}
+	}
+}
+
+/*
+ * Most abilities that use Pressed will also get triggered by Held.
+ * Logic for AutoRunToDestination of a Left Click decided here if not touching a target
+ */
+void AAuraPlayerController::AbilityInputTagPressed(const FGameplayTag InputTag)
+{
+	if (IsLMB(InputTag))
+	{
+		bTargeting = CurrentTargetActor ? true : false;
+		bAutoRunning = false;
+	}
+}
+
+/*
+ * Will trigger an on Release ability if not a left click or has a target
+ * Will set up the spline points to move destination when left click does not hit a Target
+ */
+void AAuraPlayerController::AbilityInputTagReleased(const FGameplayTag InputTag)
+{
+	if (!IsLMB(InputTag) || bTargeting)
+	{
+		if (GetAuraAbilitySystemComponent())
+		{
+			GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
+		}
 	}
 	else
 	{
-		if (CurrentActor != nullptr)
-		{
-			if (LastActor != CurrentActor)
-			{
-				//Case D
-				LastActor->UnHighlightActor();
-				CurrentActor->HighlightActor();
-			}
-			//Case E
-		}
-		else
-		{
-			//Case C
-			LastActor->UnHighlightActor();
-		}
+		SetAutoRunSpline();
 	}
 }
 
-void AAuraPlayerController::AbilityInputTagPressed(const FGameplayTag InputTag)
-{
-	//GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, FString::Printf(TEXT("%s"), *InputTag.ToString()));
-}
-
-void AAuraPlayerController::AbilityInputTagReleased(const FGameplayTag InputTag)
-{
-	if (!GetAuraAbilitySystemComponent())return;
-	GetAuraAbilitySystemComponent()->AbilityInputTagReleased(InputTag);
-}
-
+/*
+ * Will trigger an on Pressed or Held ability if not a left click or has a target
+ * Will move to destination hit point when left click does not hit a Target
+ */
 void AAuraPlayerController::AbilityInputTagHeld(const FGameplayTag InputTag)
 {
-	if (!GetAuraAbilitySystemComponent())return;
-	GetAuraAbilitySystemComponent()->AbilityInputTagHeld(InputTag);
+	if (!IsLMB(InputTag) || bTargeting)
+	{
+		if (GetAuraAbilitySystemComponent())
+		{
+			GetAuraAbilitySystemComponent()->AbilityInputTagHeld(InputTag);
+		}
+	}
+	else
+	{
+		MoveToHitPoint();
+	}
+}
+
+/*
+ * Uses current mouse pointer hit to set a destination point and move to it
+ */
+void AAuraPlayerController::MoveToHitPoint()
+{
+	FollowTime += GetWorld()->GetDeltaSeconds();
+	
+	if (CursorHit.bBlockingHit)
+	{
+		CachedDestination = CursorHit.ImpactPoint;
+	}
+
+	if (APawn* ControlledPawn = GetPawn())
+	{
+		const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
+		ControlledPawn->AddMovementInput(WorldDirection);
+	}
+}
+
+/*
+ * Gets a navigation path along the nav mesh to the CachedDestination and adds it to a spline for the player to auto run along
+ */
+void AAuraPlayerController::SetAutoRunSpline()
+{
+	const APawn* ControlledPawn = GetPawn();
+	if (FollowTime <= ShortPressThreshold && ControlledPawn)
+	{
+		if (UNavigationPath* NavigationPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination))
+		{
+			SplineComponent->ClearSplinePoints();
+			for (const FVector& PointLocation : NavigationPath->PathPoints)
+			{
+				SplineComponent->AddSplinePoint(PointLocation, ESplineCoordinateSpace::World);
+				DrawDebugSphere(GetWorld(), PointLocation, 1.f, 8, FColor::Green, false, 5.f);
+			}
+
+			if (NavigationPath->PathPoints.Num() > 0)
+			{
+				CachedDestination = NavigationPath->PathPoints[NavigationPath->PathPoints.Num() - 1];
+			}
+				
+			bAutoRunning = true;
+		}
+	}
+
+	FollowTime = 0.f;
+	bTargeting = false;
 }
 
 UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponent()
