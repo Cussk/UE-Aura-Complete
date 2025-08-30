@@ -6,7 +6,10 @@
 #include "GameplayTagContainer.h"
 #include "Engine/DataAsset.h"
 #include "AttributeInfo.generated.h"
-
+/*
+ * Captures pertinent attribute information set in the Editor
+ * C++ Settable float for current numeric value of the Attribute
+ */
 USTRUCT(BlueprintType)
 struct FAuraAttributeInfo
 {
@@ -26,7 +29,8 @@ struct FAuraAttributeInfo
 };
 
 /**
- * 
+ * Data Class to hold an array of FAttributeInfos
+ * and a getter to retrieve the desired struct from the array
  */
 UCLASS()
 class AURACOMPLETE_API UAttributeInfo : public UDataAsset

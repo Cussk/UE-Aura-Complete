@@ -4,7 +4,9 @@
 #include "AbilitySystem/ModMagCalc/MMC_MaxMana.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Interaction/CombatInterface.h"
-
+/*
+ * Initializes attribute capture for Intelligence to drive MaxMana calculation
+ */
 UMMC_MaxMana::UMMC_MaxMana()
 {
 	IntelligenceDefinition.AttributeToCapture = UAuraAttributeSet::GetIntelligenceAttribute();
@@ -14,6 +16,9 @@ UMMC_MaxMana::UMMC_MaxMana()
 	RelevantAttributesToCapture.Add(IntelligenceDefinition);
 }
 
+/*
+ * Calculates MaxMana based on Intelligence and Character Level
+ */
 float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 	// Gather tags from source and target

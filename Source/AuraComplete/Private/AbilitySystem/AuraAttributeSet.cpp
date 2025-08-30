@@ -10,6 +10,8 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
+	//Boilerplate mapping Attribute Gameplay Tags to Attribute Getters
+	
 	// Primary Attributes
 	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Primary_Strength, GetStrengthAttribute);
 	TagsToAttributes.Add(FAuraGameplayTags::TAG_Attributes_Primary_Intelligence, GetIntelligenceAttribute);
@@ -90,7 +92,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 /*
  * Populates Effect Properties Struct from Gameplay Effect Callback Data
  */
-void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data,FEffectProperties& EffectProperties) const
+void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data,FEffectProperties& EffectProperties)
 {
 	//Source - causer of the effect, Target = target of the effect (owner of this Attribute Set)
 
@@ -123,6 +125,8 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		EffectProperties.TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(EffectProperties.TargetAvatarActor);
 	}
 }
+
+/*All OnRep_Attribute Fires when an Attribute is replicated to the client down from the sever  */
 
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {

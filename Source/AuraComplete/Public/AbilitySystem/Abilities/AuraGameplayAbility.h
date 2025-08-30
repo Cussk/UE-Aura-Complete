@@ -7,7 +7,8 @@
 #include "AuraGameplayAbility.generated.h"
 
 /**
- * 
+ * Base project class for Gameplay Abilities
+ * Set any initial InputTags in Blueprint children
  */
 UCLASS()
 class AURACOMPLETE_API UAuraGameplayAbility : public UGameplayAbility

@@ -4,7 +4,9 @@
 #include "AbilitySystem/ModMagCalc/MMC_MaxHealth.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "Interaction/CombatInterface.h"
-
+/*
+ * Initializes attribute capture for Vigor to drive MaxMana calculation
+ */
 UMMC_MaxHealth::UMMC_MaxHealth()
 {
 	VigorDefinition.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();
@@ -14,6 +16,9 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 	RelevantAttributesToCapture.Add(VigorDefinition);
 }
 
+/*
+ * Calculates MaxMana based on Vigor and Character Level
+ */
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 	// Gather tags from source and target

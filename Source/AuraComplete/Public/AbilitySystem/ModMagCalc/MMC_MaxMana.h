@@ -7,7 +7,7 @@
 #include "MMC_MaxMana.generated.h"
 
 /**
- * 
+ * Creates a Custom Calculation for MaxMana total value
  */
 UCLASS()
 class AURACOMPLETE_API UMMC_MaxMana : public UGameplayModMagnitudeCalculation

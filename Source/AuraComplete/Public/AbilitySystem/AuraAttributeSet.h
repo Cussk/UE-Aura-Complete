@@ -7,12 +7,16 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAttributeSet.generated.h"
 
+// Macro to provide accessors/getters/setters for each attribute
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+/*
+ * Struct to handle any parameters related to Gameplay Effects
+ */
 USTRUCT()
 struct FEffectProperties
 {
@@ -54,7 +58,8 @@ template<class T>
 using TStaticFuncPtr = TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr;
 
 /**
- * 
+ * Handles all attributes relevant to Characters Player and NPC
+ * Mostly boilerplate code for initializing, modifying, and getting Attributes or their numeric values
  */
 UCLASS()
 class AURACOMPLETE_API UAuraAttributeSet : public UAttributeSet
@@ -195,7 +200,7 @@ public:
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 
 private:
-	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties) const;
+	static void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties);
 };
 
 

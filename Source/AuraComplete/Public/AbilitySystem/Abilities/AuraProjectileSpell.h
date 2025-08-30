@@ -8,7 +8,9 @@
 
 class AAuraProjectile;
 /**
- * 
+ * Base Projectile Gameplay Ability class
+ * Used to set default logic
+ * Can be extended in Blueprints
  */
 UCLASS()
 class AURACOMPLETE_API UAuraProjectileSpell : public UAuraGameplayAbility

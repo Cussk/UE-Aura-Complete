@@ -6,7 +6,12 @@
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
 
-
+/** 
+ * Activates the projectile spell ability.
+ * - Only executes on the server (authority check)
+ * - Spawns a projectile at the combat socket location of the avatar
+ * - Projectile is owned by the ability's owning actor
+ */
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,const FGameplayEventData* TriggerEventData)
 {

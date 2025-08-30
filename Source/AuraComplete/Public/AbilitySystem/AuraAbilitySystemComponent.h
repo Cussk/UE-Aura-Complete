@@ -9,7 +9,9 @@
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /*AssetTags*/);
 
 /**
- * 
+ * Core component for GAS
+ * Attached directly to Character class for NPCs
+ * Attached to PlayerState fot Player characters
  */
 UCLASS()
 class AURACOMPLETE_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -18,9 +20,7 @@ class AURACOMPLETE_API UAuraAbilitySystemComponent : public UAbilitySystemCompon
 
 public:
 	void AbilityActorInfoSet();
-
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartingAbilities);
-
 	void AbilityInputTagHeld(const FGameplayTag& InputTag);
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
 

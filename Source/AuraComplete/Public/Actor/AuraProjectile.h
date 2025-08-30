@@ -9,6 +9,12 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 
+/*
+ * Base class for all projectile actors
+ * Has a sphereComponent for overlapping
+ * Has ProjectileMovementComponent to move the actor through the level
+ * Specific projectile classes created in Blueprints
+ */
 UCLASS()
 class AURACOMPLETE_API AAuraProjectile : public AActor
 {

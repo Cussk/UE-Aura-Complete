@@ -3,6 +3,9 @@
 
 #include "AbilitySystem/Data/AttributeInfo.h"
 
+/*
+ * Matches the provided GamePlay Tag to the corresponding FAuraAttributeInfo and returns it
+ */
 FAuraAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, const bool bLogNotFound) const
 {
 	for (const FAuraAttributeInfo& Info : AttributeInformation)
