@@ -35,7 +35,7 @@ UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 }
 
 /*
- * 
+ * Fires when Level is replicated to the client down from the sever 
  */
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {

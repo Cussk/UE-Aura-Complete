@@ -18,6 +18,9 @@ AAuraCharacter::AAuraCharacter()
 	RotatePlayerToMovement();
 }
 
+/*
+ * Called when this Pawn is possessed. Only called on the server (or in standalone).
+ */
 void AAuraCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -27,6 +30,9 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	AddCharacterAbilities();
 }
 
+/*
+ * Fires when Player State is replicated down to client from the server
+ */
 void AAuraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
@@ -35,13 +41,9 @@ void AAuraCharacter::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
-int32 AAuraCharacter::GetCharacterLevel()
-{
-	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
-	check(AuraPlayerState);
-	return AuraPlayerState->GetCharacterLevel();
-}
-
+/*
+ * Creates/initializes Player Camera to be a top-down follow camera
+ */
 void AAuraCharacter::SetupTopDownCamera()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
@@ -59,6 +61,9 @@ void AAuraCharacter::SetupTopDownCamera()
 	CameraActor->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 }
 
+/*
+ * Rotate player avatar to the direction they are moving in
+ */
 void AAuraCharacter::RotatePlayerToMovement()
 {
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -66,11 +71,15 @@ void AAuraCharacter::RotatePlayerToMovement()
 	GetCharacterMovement()->bConstrainToPlane = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 
+	//Stops Player from trying to orient based on PlayerController's rotation
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 }
 
+/*
+ * Sets up Player Ability Actor Info, Main HUD, and initial attribute values
+ */
 void AAuraCharacter::InitAbilityActorInfo()
 {
 	AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
@@ -89,4 +98,13 @@ void AAuraCharacter::InitAbilityActorInfo()
 	}
 
 	InitializeDefaultAttributes();
+}
+
+/* GETTERS */
+
+int32 AAuraCharacter::GetCharacterLevel()
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(AuraPlayerState);
+	return AuraPlayerState->GetCharacterLevel();
 }

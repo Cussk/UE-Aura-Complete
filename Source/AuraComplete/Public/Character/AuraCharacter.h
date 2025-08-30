@@ -10,7 +10,9 @@ class UCameraComponent;
 class USpringArmComponent;
 
 /**
- * 
+ * Base character class for all Players
+ * Top level for all Player related systems
+ * All pertinent character components will be attached here
  */
 UCLASS()
 class AURACOMPLETE_API AAuraCharacter : public AAuraCharacterBase

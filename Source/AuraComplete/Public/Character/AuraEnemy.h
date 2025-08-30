@@ -8,7 +8,8 @@
 #include "AuraEnemy.generated.h"
 
 /**
- * 
+ * Base character class for all NPC enemies
+ * Blueprint versions created for enemy types
  */
 UCLASS()
 class AURACOMPLETE_API AAuraEnemy : public AAuraCharacterBase, public ITargetInterface
@@ -22,7 +23,7 @@ public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 
-	/* Combat INterface */
+	/* Combat Interface */
 	virtual int32 GetCharacterLevel() override;
 
 protected:

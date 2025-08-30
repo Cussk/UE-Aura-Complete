@@ -13,6 +13,11 @@ class UGameplayEffect;
 class UAttributeSet;
 class UAbilitySystemComponent;
 
+/*
+ * Base Character class for Player and NPCs in project
+ * Abstract, cannot be instantiated
+ * In charge of defining/setting initial parameters for all character types
+ */
 UCLASS(Abstract)
 class AURACOMPLETE_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
