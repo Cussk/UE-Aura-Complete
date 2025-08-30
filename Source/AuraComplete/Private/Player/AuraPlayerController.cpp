@@ -79,6 +79,9 @@ void AAuraPlayerController::SetupInputComponent()
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
+/*
+ * Move logic for keyed movement (WASD)
+ */
 void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2d InputAxisVector = InputActionValue.Get<FVector2D>();
@@ -220,6 +223,9 @@ void AAuraPlayerController::SetAutoRunSpline()
 	bTargeting = false;
 }
 
+/*
+ * Cast and set or just return AuraAbilitySystemComponent
+ */
 UAuraAbilitySystemComponent* AAuraPlayerController::GetAuraAbilitySystemComponent()
 {
 	if (!AuraAbilitySystemComponent)

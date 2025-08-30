@@ -14,7 +14,7 @@ class UTargetInterface : public UInterface
 };
 
 /**
- * 
+ * Interface attached to any pawn or actor that can be targeted by Player 
  */
 class AURACOMPLETE_API ITargetInterface
 {

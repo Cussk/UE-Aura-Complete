@@ -9,6 +9,7 @@
 
 AAuraPlayerState::AAuraPlayerState()
 {
+	//Create and replicate Ability System Component to server
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
@@ -18,6 +19,9 @@ AAuraPlayerState::AAuraPlayerState()
 	SetNetUpdateFrequency(100.f);
 }
 
+/**
+ * Returns the properties used for network replication
+ */
 void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -30,6 +34,9 @@ UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+/*
+ * 
+ */
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {
 	

@@ -5,6 +5,9 @@
 
 #include "InputAction.h"
 
+/*
+ * Checks Player owned abilities for matching input tags assigned to the ability
+ */
 const UInputAction* UAuraInputConfig::FindAbilityInputActionForTag(const FGameplayTag& InputTag, const bool bLogNotFound) const
 {
 	for (const FAuraInputAction& InputAction : AbilityInputActions)

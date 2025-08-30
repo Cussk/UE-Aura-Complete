@@ -10,7 +10,7 @@
 class UAttributeSet;
 class UAbilitySystemComponent;
 /**
- * 
+ * Class for setting player information and replicating to server/other clients where required
  */
 UCLASS()
 class AURACOMPLETE_API AAuraPlayerState : public APlayerState, public IAbilitySystemInterface

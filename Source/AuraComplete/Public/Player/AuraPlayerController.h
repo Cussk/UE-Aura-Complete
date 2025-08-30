@@ -16,7 +16,7 @@ class UAuraAbilitySystemComponent;
 class USplineComponent;
 
 /**
- * 
+ * Class in charge of setting up/defining player inputs
  */
 UCLASS()
 class AURACOMPLETE_API AAuraPlayerController : public APlayerController
@@ -25,7 +25,6 @@ class AURACOMPLETE_API AAuraPlayerController : public APlayerController
 
 public:
 	AAuraPlayerController();
-	void AutoRunToDestination();
 	virtual void PlayerTick(float DeltaTime) override;
 	
 protected:
@@ -39,10 +38,11 @@ private:
 	void Move(const struct FInputActionValue& InputActionValue);
 	void CursorTrace();
 	void AbilityInputTagPressed(FGameplayTag InputTag);
-	void SetAutoRunSpline();
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
+	void SetAutoRunSpline();
 	void MoveToHitPoint();
+	void AutoRunToDestination();
 	UAuraAbilitySystemComponent* GetAuraAbilitySystemComponent();
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
