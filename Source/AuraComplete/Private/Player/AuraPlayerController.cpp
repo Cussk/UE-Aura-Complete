@@ -76,6 +76,8 @@ void AAuraPlayerController::SetupInputComponent()
 
 	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAuraPlayerController::ShiftPressed);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &AAuraPlayerController::ShiftReleased);
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
@@ -142,7 +144,7 @@ void AAuraPlayerController::AbilityInputTagPressed(const FGameplayTag InputTag)
  */
 void AAuraPlayerController::AbilityInputTagReleased(const FGameplayTag InputTag)
 {
-	if (!IsLMB(InputTag) || bTargeting)
+	if (!IsLMB(InputTag) || bTargeting || bShiftKeyDown)
 	{
 		if (GetAuraAbilitySystemComponent())
 		{
@@ -156,12 +158,12 @@ void AAuraPlayerController::AbilityInputTagReleased(const FGameplayTag InputTag)
 }
 
 /*
- * Will trigger an on Pressed or Held ability if not a left click or has a target
+ * Will trigger an on Pressed or Held ability if not a left click or has a target or holding a shift key
  * Will move to destination hit point when left click does not hit a Target
  */
 void AAuraPlayerController::AbilityInputTagHeld(const FGameplayTag InputTag)
 {
-	if (!IsLMB(InputTag) || bTargeting)
+	if (!IsLMB(InputTag) || bTargeting || bShiftKeyDown)
 	{
 		if (GetAuraAbilitySystemComponent())
 		{

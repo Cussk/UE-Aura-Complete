@@ -36,6 +36,8 @@ protected:
 private:
 
 	static bool IsLMB(const FGameplayTag& InputTag){ return InputTag.MatchesTagExact(FAuraGameplayTags::TAG_InputTag_LMB); }
+	void ShiftPressed() { bShiftKeyDown = true; }
+	void ShiftReleased() { bShiftKeyDown = false; }
 
 	void Move(const struct FInputActionValue& InputActionValue);
 	void CursorTrace();
@@ -53,6 +55,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ShiftAction;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UAuraInputConfig> InputConfig;
 
@@ -66,6 +71,7 @@ private:
 	float AutoRunAcceptanceRadius = 50.f;
 
 	FHitResult CursorHit;
+	bool bShiftKeyDown = false;
 
 	//Target Variables
 	TScriptInterface<ITargetInterface> LastTargetActor;
