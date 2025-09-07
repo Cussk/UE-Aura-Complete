@@ -26,6 +26,8 @@ class AURACOMPLETE_API AAuraPlayerController : public APlayerController
 public:
 	AAuraPlayerController();
 	virtual void PlayerTick(float DeltaTime) override;
+
+	FHitResult GetCursorHit() {return CursorHit;}
 	
 protected:
 	virtual void BeginPlay() override;

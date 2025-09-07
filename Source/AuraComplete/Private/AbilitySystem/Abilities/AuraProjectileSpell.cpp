@@ -8,9 +8,6 @@
 
 /** 
  * Activates the projectile spell ability.
- * - Only executes on the server (authority check)
- * - Spawns a projectile at the combat socket location of the avatar
- * - Projectile is owned by the ability's owning actor
  */
 void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,const FGameplayEventData* TriggerEventData)
@@ -19,7 +16,12 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	
 }
 
-void UAuraProjectileSpell::SpawnProjectile()
+/** 
+ * - Only executes on the server (authority check)
+ * - Spawns a projectile at the combat socket location of the avatar
+ * - Projectile is owned by the ability's owning actor
+ */
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
@@ -28,10 +30,12 @@ void UAuraProjectileSpell::SpawnProjectile()
 	if (CombatInterface)
 	{
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
+		FRotator ProjectileRotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+		ProjectileRotation.Pitch = 0.0f;
 
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
-		//TODO: Set projectile rotation.
+		SpawnTransform.SetRotation(ProjectileRotation.Quaternion());
 		
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
 			ProjectileClass, SpawnTransform,
