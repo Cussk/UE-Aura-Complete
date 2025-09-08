@@ -31,9 +31,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
+	virtual void InitializeDefaultAttributes() const;
 	virtual FVector GetCombatSocketLocation() override;
 	void ApplyEffectToSelf(const TSubclassOf<UGameplayEffect>& GameplayEffectClass, float Level = 1) const;
-	void InitializeDefaultAttributes() const;
 	void AddCharacterAbilities() const;
 
 	UPROPERTY(EditAnywhere, Category="Combat")
