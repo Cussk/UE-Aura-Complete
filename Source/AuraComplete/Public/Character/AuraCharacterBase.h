@@ -26,9 +26,13 @@ class AURACOMPLETE_API AAuraCharacterBase : public ACharacter, public IAbilitySy
 
 public:
 	AAuraCharacterBase();
+	virtual void Die() override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MultiCastHandleDeath();
 
 protected:
 	virtual void BeginPlay() override;

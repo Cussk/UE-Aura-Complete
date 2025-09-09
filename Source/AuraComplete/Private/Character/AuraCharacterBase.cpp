@@ -76,6 +76,34 @@ void AAuraCharacterBase::AddCharacterAbilities() const
 	AuraAbilitySystemComponent->AddCharacterAbilities(StartingAbilities);
 }
 
+/*
+ * Server only death logic
+ */
+void AAuraCharacterBase::Die()
+{
+	Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
+	MultiCastHandleDeath();
+}
+
+/*
+ * Server and client death logic
+ */
+void AAuraCharacterBase::MultiCastHandleDeath_Implementation()
+{
+	//Drop Weapon
+	Weapon->SetSimulatePhysics(true);
+	Weapon->SetEnableGravity(true);
+	Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+
+	//Ragdoll Character Mesh
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetEnableGravity(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
 /* GETTERS */
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
