@@ -12,6 +12,7 @@ class UGameplayAbility;
 class UGameplayEffect;
 class UAttributeSet;
 class UAbilitySystemComponent;
+class UAnimMontage;
 
 /*
  * Base Character class for Player and NPCs in project
@@ -26,6 +27,7 @@ class AURACOMPLETE_API AAuraCharacterBase : public ACharacter, public IAbilitySy
 public:
 	AAuraCharacterBase();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 
 protected:
@@ -61,4 +63,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartingAbilities;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<UAnimMontage> HitReactMontage;
 };

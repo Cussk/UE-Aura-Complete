@@ -22,6 +22,8 @@ class AURACOMPLETE_API AAuraEnemy : public AAuraCharacterBase, public ITargetInt
 public:
 	AAuraEnemy();
 
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
 	/* Target Interface */
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
@@ -34,6 +36,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnFloatAttributeChangedSignature OnMaxHealthChanged;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool bHitReacting = false;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed = 250.f;
 
 protected:
 	virtual void BeginPlay() override;

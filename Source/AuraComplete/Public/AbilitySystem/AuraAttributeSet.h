@@ -209,7 +209,7 @@ public:
 
 private:
 	static void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties);
-	void ApplyIncomingDamage(const FGameplayEffectModCallbackData& Data);;
+	void ApplyIncomingDamage(const FGameplayEffectModCallbackData& Data, const FEffectProperties& EffectProperties);
 };
 
 
