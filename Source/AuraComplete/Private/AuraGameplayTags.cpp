@@ -36,3 +36,6 @@ UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_1, "InputTag.1", 
 UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_2, "InputTag.2", "Key 2 Input Tag");
 UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_3, "InputTag.3", "Key 3 Input Tag");
 UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_4, "InputTag.4", "Key 4 Input Tag");
+
+
+UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage, "Damage", "Damage dealt");
