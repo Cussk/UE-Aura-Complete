@@ -209,6 +209,8 @@ public:
 
 private:
 	static void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties);
+	static void ShowDamageAnimation(const FEffectProperties& EffectProperties, float NewHealth);
+	static void ShowFloatingText(const FEffectProperties& EffectProperties, float Damage);
 	void ApplyIncomingDamage(const FGameplayEffectModCallbackData& Data, const FEffectProperties& EffectProperties);
 };
 

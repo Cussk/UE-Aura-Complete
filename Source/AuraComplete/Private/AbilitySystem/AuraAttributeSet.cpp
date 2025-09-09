@@ -8,6 +8,8 @@
 #include "GameFramework/Character.h"
 #include "AuraGameplayTags.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/AuraPlayerController.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -88,7 +90,6 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 	FEffectProperties EffectProperties;
 	SetEffectProperties(Data, EffectProperties);
-
 	ApplyIncomingDamage(Data, EffectProperties);
 }
 
@@ -106,22 +107,43 @@ void UAuraAttributeSet::ApplyIncomingDamage(const FGameplayEffectModCallbackData
 		{
 			const float NewHealth = GetHealth() - LocalIncomingDamage;
 			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
+			
+			ShowDamageAnimation(EffectProperties, NewHealth);
+			ShowFloatingText(EffectProperties, LocalIncomingDamage);
+		}
+	}
+}
 
-			const bool bFatal = NewHealth <= 0.f;
-			if (bFatal)
-			{
-				ICombatInterface* CombatInterface = Cast<ICombatInterface>(EffectProperties.TargetAvatarActor);
-				if (CombatInterface)
-				{
-					CombatInterface->Die();
-				}
-			}
-			else
-			{
-				FGameplayTagContainer TagContainer;
-				TagContainer.AddTag(FAuraGameplayTags::TAG_Effects_HitReact);
-				EffectProperties.TargetAbilitySystemComponent->TryActivateAbilitiesByTag(TagContainer);
-			}
+/*
+ * Shows death effect and destroys character if health has reached 0 or shows a hit effect if damage
+ */
+void UAuraAttributeSet::ShowDamageAnimation(const FEffectProperties& EffectProperties, const float NewHealth)
+{
+	if (NewHealth <= 0.f)
+	{
+		if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(EffectProperties.TargetAvatarActor))
+		{
+			CombatInterface->Die();
+		}
+	}
+	else
+	{
+		FGameplayTagContainer TagContainer;
+		TagContainer.AddTag(FAuraGameplayTags::TAG_Effects_HitReact);
+		EffectProperties.TargetAbilitySystemComponent->TryActivateAbilitiesByTag(TagContainer);
+	}
+}
+
+/*
+ * Shows damage text if not self damage
+ */
+void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& EffectProperties, const float Damage)
+{
+	if (EffectProperties.SourceCharacter != EffectProperties.TargetCharacter)
+	{
+		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(EffectProperties.SourceCharacter, 0)))
+		{
+			AuraPlayerController->ShowDamageNumber(Damage, EffectProperties.TargetCharacter);
 		}
 	}
 }

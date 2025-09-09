@@ -8,8 +8,10 @@
 #include "NavigationSystem.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Components/SplineComponent.h"
+#include "GameFramework/Character.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/TargetInterface.h"
+#include "UI/Widget/DamageTextComponent.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -224,6 +226,24 @@ void AAuraPlayerController::SetAutoRunSpline()
 	FollowTime = 0.f;
 	bTargeting = false;
 }
+
+/*
+ * Create and set value for Damage Text on server and client
+ */
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+{
+	if (IsValid(TargetCharacter) && DamageTextComponentClass)
+	{
+		UDamageTextComponent* DamageTextComponent = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
+		DamageTextComponent->RegisterComponent(); //Dynamic Object creation needs manual register
+		DamageTextComponent->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform); //start at character taking damage
+		DamageTextComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+		DamageTextComponent->SetDamageText(DamageAmount);
+	}
+}
+
+
+/* GETTERS */
 
 /*
  * Cast and set or just return AuraAbilitySystemComponent
