@@ -33,6 +33,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void GiveStartingAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* AbilitySystemComponent);
 
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
+	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+
 private:
 
 	template <typename T>

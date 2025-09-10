@@ -6,6 +6,28 @@
 #include "GameplayEffectExecutionCalculation.h"
 #include "ExecCalc_Damage.generated.h"
 
+class ICombatInterface;
+
+struct DamageContext
+{
+	const UAbilitySystemComponent* SourceAbilitySystemComponent = nullptr;
+	const UAbilitySystemComponent* TargetAbilitySystemComponent = nullptr;
+
+	AActor* SourceAvatar = nullptr;
+	AActor* TargetAvatar = nullptr;
+
+	ICombatInterface* SourceCombatInterface = nullptr;
+	ICombatInterface* TargetCombatInterface = nullptr;
+
+	const FGameplayEffectSpec* GameplayEffectSpec = nullptr;
+
+	const FGameplayTagContainer* SourceTags = nullptr;
+	const FGameplayTagContainer* TargetTags = nullptr;
+
+	FAggregatorEvaluateParameters EvaluateParameters;
+	float Damage = 0.f;
+};
+
 /**
  * 
  */
@@ -20,6 +42,7 @@ public:
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
 
 private:
-	static float ApplyBlockChance(const FGameplayEffectCustomExecutionParameters& ExecutionParams, const FAggregatorEvaluateParameters& EvaluationParameters, float& OutDamage);
-	static float ApplyArmor(const FGameplayEffectCustomExecutionParameters& ExecutionParams, const FAggregatorEvaluateParameters& EvaluationParameters, float& OutDamage);
+	static DamageContext CreateDamageContext(const FGameplayEffectCustomExecutionParameters& ExecutionParams);
+	static void ApplyBlockChance(const FGameplayEffectCustomExecutionParameters& ExecutionParams, DamageContext& DamageContext);
+	static void ApplyArmor(const FGameplayEffectCustomExecutionParameters& ExecutionParams, DamageContext& DamageContext);
 };
