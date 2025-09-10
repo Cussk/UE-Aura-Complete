@@ -45,4 +45,5 @@ private:
 	static DamageContext CreateDamageContext(const FGameplayEffectCustomExecutionParameters& ExecutionParams);
 	static void ApplyBlockChance(const FGameplayEffectCustomExecutionParameters& ExecutionParams, DamageContext& DamageContext);
 	static void ApplyArmor(const FGameplayEffectCustomExecutionParameters& ExecutionParams, DamageContext& DamageContext);
+	static void ApplyCriticalHit(const FGameplayEffectCustomExecutionParameters& ExecutionParams, DamageContext& DamageContext);
 };

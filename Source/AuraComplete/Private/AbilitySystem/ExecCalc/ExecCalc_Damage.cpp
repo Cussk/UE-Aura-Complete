@@ -16,11 +16,18 @@ struct AuraDamageStatics
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(ArmorPenetration);
 	DECLARE_ATTRIBUTE_CAPTUREDEF(BlockChance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitChance);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitDamage);
+	DECLARE_ATTRIBUTE_CAPTUREDEF(CriticalHitResistance);
+
 	AuraDamageStatics()
 	{
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, Armor, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, ArmorPenetration, Source, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, BlockChance, Target, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitChance, Source, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitDamage, Source, false);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAuraAttributeSet, CriticalHitResistance, Target, false);
 	}
 };
 
@@ -35,6 +42,9 @@ UExecCalc_Damage::UExecCalc_Damage()
 	RelevantAttributesToCapture.Add(DamageStatics().ArmorDef);
 	RelevantAttributesToCapture.Add(DamageStatics().ArmorPenetrationDef);
 	RelevantAttributesToCapture.Add(DamageStatics().BlockChanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitChanceDef);
+	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitDamageDef);
+	RelevantAttributesToCapture.Add(DamageStatics().CriticalHitResistanceDef);
 }
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
                                               FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
@@ -43,6 +53,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	ApplyBlockChance(ExecutionParams, DamageContext);
 	ApplyArmor(ExecutionParams, DamageContext);
+	ApplyCriticalHit(ExecutionParams, DamageContext);
 
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(), EGameplayModOp::Additive, DamageContext.Damage);
 	OutExecutionOutput.AddOutputModifier(EvaluatedData);
@@ -117,5 +128,36 @@ void UExecCalc_Damage::ApplyArmor(const FGameplayEffectCustomExecutionParameters
 
 	// Effective Armor times the coefficient's value reduces damage by 1 percent
 	DamageContext.Damage *= (100 - EffectiveArmor * EffectiveArmorCoefficient) / 100.f;
+}
+
+/*
+ * Capture CriticalHitResistance on Target and CriticalHitChance on Source, and determine remaining Critical Chance
+ * If hits capture CriticalHitDamage and calculate new damage value 
+ */
+void UExecCalc_Damage::ApplyCriticalHit(const FGameplayEffectCustomExecutionParameters& ExecutionParams, DamageContext& DamageContext)
+{
+	float SourceCriticalHitChance = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitChanceDef, DamageContext.EvaluateParameters, SourceCriticalHitChance);
+	SourceCriticalHitChance = FMath::Max<float>(0.0f, SourceCriticalHitChance);
+
+	float TargetCriticalHitResistance = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitResistanceDef, DamageContext.EvaluateParameters, TargetCriticalHitResistance);
+	TargetCriticalHitResistance = FMath::Max<float>(0.0f, TargetCriticalHitResistance);
+
+	const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(DamageContext.SourceAvatar);
+	const FRealCurve* CriticalHitResistanceCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(AuraCurveNames::CriticalHitResistance, FString());
+	const float CriticalHitResistanceCoefficient = CriticalHitResistanceCurve->Eval(DamageContext.TargetCombatInterface->GetCharacterLevel());
+
+	// Critical Hit Resistance reduces Critical Hit Chance by a certain percentage
+	const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient;
+	const bool bCriticalHit = FMath::RandRange(1, 100) < EffectiveCriticalHitChance;
+	if (!bCriticalHit) return;
+
+	float SourceCriticalHitDamage = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitDamageDef, DamageContext.EvaluateParameters, SourceCriticalHitDamage);
+	SourceCriticalHitDamage = FMath::Max<float>(0.0f, SourceCriticalHitDamage);
+
+	// Critical Hit doubles damage plus Source's Critical Hit Damage value
+	DamageContext.Damage += DamageContext.Damage + SourceCriticalHitDamage;
 }
 
