@@ -1,5 +1,19 @@
 ﻿#include "AuraAbilityTypes.h"
 
+/**
+ * Custom network serialization for FAuraGameplayEffectContext.
+ * 
+ * - Packs replication flags (RepBits) to determine which members need to be serialized.
+ * - Serializes core GameplayEffectContext data and custom data to this project
+ * - Ensures memory for HitResult is allocated if loading from the network.
+ * - Re-initializes the InstigatorAbilitySystemComponent when loading to maintain
+ *   correct gameplay ability system references.
+ * 
+ * @param Ar           The archive used for reading/writing.
+ * @param Map          Package map used for object reference serialization.
+ * @param bOutSuccess  Set to true if serialization succeeds.
+ * @return Always true if serialization is successful.
+ */
 bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)
 {
 	uint32 RepBits = 0;

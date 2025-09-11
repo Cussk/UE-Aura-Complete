@@ -3,6 +3,11 @@
 #include "GameplayEffectTypes.h"
 #include "AuraAbilityTypes.generated.h"
 
+/*
+ * Custom GameplayEffectContext that extends FGameplayEffectContext
+ * with additional combat data defined here.
+ * Supports network serialization and duplication for use in GAS.
+ */
 USTRUCT(BlueprintType)
 struct FAuraGameplayEffectContext : public FGameplayEffectContext
 {

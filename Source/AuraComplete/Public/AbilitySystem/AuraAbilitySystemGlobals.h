@@ -7,7 +7,7 @@
 #include "AuraAbilitySystemGlobals.generated.h"
 
 /**
- * 
+ * Holds global data for the gameplay ability system.
  */
 UCLASS()
 class AURACOMPLETE_API UAuraAbilitySystemGlobals : public UAbilitySystemGlobals
