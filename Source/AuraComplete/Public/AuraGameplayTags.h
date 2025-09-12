@@ -11,7 +11,7 @@
  * Declare Macro here and Define macro with or without comment in .cpp
  */
 namespace FAuraGameplayTags
-{
+{	
 	// Parents
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Message);
@@ -46,8 +46,13 @@ namespace FAuraGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_InputTag_3)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_InputTag_4)
 
-	// Combat Tags
+	// Damage Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Fire)
+
+	extern TArray<FGameplayTag> DamageTypes;
+
+	//Anim Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Effects_HitReact)
 
 };
