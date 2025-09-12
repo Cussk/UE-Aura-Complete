@@ -25,7 +25,7 @@ public:
 	bool IsCriticalHit() const { return bIsCriticalHit; }
 
 	void SetIsBlockedHit(const bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
-	void SetIsCriticalHit(const bool bInIsCriticalHit) { bIsBlockedHit = bInIsCriticalHit; }
+	void SetIsCriticalHit(const bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 
 protected:
 

@@ -7,6 +7,7 @@
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "AuraGameplayTags.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerController.h"
@@ -138,12 +139,14 @@ void UAuraAttributeSet::ShowDamageAnimation(const FEffectProperties& EffectPrope
  * Shows damage text if not self damage
  */
 void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& EffectProperties, const float Damage)
-{
+{	
 	if (EffectProperties.SourceCharacter != EffectProperties.TargetCharacter)
 	{
 		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(EffectProperties.SourceCharacter, 0)))
 		{
-			AuraPlayerController->ShowDamageNumber(Damage, EffectProperties.TargetCharacter);
+			const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
+			const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
+			AuraPlayerController->ShowDamageNumber(Damage, EffectProperties.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
 	}
 }
@@ -151,7 +154,7 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& EffectProperti
 /*
  * Populates Effect Properties Struct from Gameplay Effect Callback Data
  */
-void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data,FEffectProperties& EffectProperties)
+void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties)
 {
 	//Source - causer of the effect, Target = target of the effect (owner of this Attribute Set)
 

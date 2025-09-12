@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AuraAbilityTypes.h"
 #include "GameplayEffectExecutionCalculation.h"
 #include "ExecCalc_Damage.generated.h"
 
@@ -20,6 +21,7 @@ struct DamageContext
 	ICombatInterface* TargetCombatInterface = nullptr;
 
 	const FGameplayEffectSpec* GameplayEffectSpec = nullptr;
+	FGameplayEffectContextHandle SourceEffectContextHandle;
 
 	const FGameplayTagContainer* SourceTags = nullptr;
 	const FGameplayTagContainer* TargetTags = nullptr;

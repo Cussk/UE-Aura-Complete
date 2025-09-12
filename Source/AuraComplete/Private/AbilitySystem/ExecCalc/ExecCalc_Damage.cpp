@@ -82,6 +82,8 @@ DamageContext UExecCalc_Damage::CreateDamageContext(const FGameplayEffectCustomE
 	DamageContext.EvaluateParameters.SourceTags = DamageContext.SourceTags;
 	DamageContext.EvaluateParameters.TargetTags = DamageContext.TargetTags;
 
+	DamageContext.SourceEffectContextHandle = DamageContext.GameplayEffectSpec->GetContext();
+
 	// Get Damage Set by Caller Magnitude
 	DamageContext.Damage = DamageContext.GameplayEffectSpec->GetSetByCallerMagnitude(FAuraGameplayTags::TAG_Damage);
 
@@ -99,6 +101,7 @@ void UExecCalc_Damage::ApplyBlockChance(const FGameplayEffectCustomExecutionPara
 	TargetBlockChance = FMath::Max<float>(0.0f, TargetBlockChance);
 	
 	const bool bBlocked = FMath::RandRange(1, 100) < TargetBlockChance;
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(DamageContext.SourceEffectContextHandle, bBlocked);
 	DamageContext.Damage = bBlocked ? DamageContext.Damage / 2.f : DamageContext.Damage;
 }
 
@@ -152,6 +155,8 @@ void UExecCalc_Damage::ApplyCriticalHit(const FGameplayEffectCustomExecutionPara
 	const float EffectiveCriticalHitChance = SourceCriticalHitChance - TargetCriticalHitResistance * CriticalHitResistanceCoefficient;
 	const bool bCriticalHit = FMath::RandRange(1, 100) < EffectiveCriticalHitChance;
 	if (!bCriticalHit) return;
+
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(DamageContext.SourceEffectContextHandle, bCriticalHit);
 
 	float SourceCriticalHitDamage = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitDamageDef, DamageContext.EvaluateParameters, SourceCriticalHitDamage);
