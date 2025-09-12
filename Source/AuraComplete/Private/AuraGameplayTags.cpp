@@ -32,6 +32,12 @@ namespace FAuraGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Vitals_Health, "Attributes.Vitals.Health", "Amount of damage a player can take before death");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Vitals_Mana, "Attributes.Vitals.Mana", "Used for casting spells and abilities");
 
+	// Resistance Attributes
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Resistance_Fire, "Attributes.Resistance.Fire", "Reduces Fire damage taken");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Resistance_Lightning, "Attributes.Resistance.Lightning", "Reduces Lightning damage taken");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Resistance_Arcane, "Attributes.Resistance.Arcane", "Reduces Arcane damage taken");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Attributes_Resistance_Physical, "Attributes.Resistance.Physical", "Reduces Physical damage taken");
+
 	//Input Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_LMB, "InputTag.LMB", "Left Mouse Button Input Tag");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_InputTag_RMB, "InputTag.RMB", "Right Mouse Button Input Tag");
@@ -43,13 +49,18 @@ namespace FAuraGameplayTags
 	// Damage Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage, "Damage", "Damage");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage_Fire, "Damage.Fire", "Fire Damage Type");
-
-	TArray<FGameplayTag> DamageTypes =
-	{
-		TAG_Damage_Fire,
-	
-	};
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage_Lightning, "Damage.Lightning", "Lightning Damage Type");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage_Arcane, "Damage.Arcane", "Arcane Damage Type");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage_Physical, "Damage.Physical", "Physical Damage Type");
 
 	//Anim Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Effects_HitReact, "Effects.HitReact", "Tag granted when hit reacted");
+
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances =
+	{
+		{TAG_Damage_Fire, TAG_Attributes_Resistance_Fire},
+		{TAG_Damage_Lightning, TAG_Attributes_Resistance_Lightning},
+		{TAG_Damage_Arcane, TAG_Attributes_Resistance_Arcane},
+		{TAG_Damage_Physical, TAG_Attributes_Resistance_Physical}
+	};
 }

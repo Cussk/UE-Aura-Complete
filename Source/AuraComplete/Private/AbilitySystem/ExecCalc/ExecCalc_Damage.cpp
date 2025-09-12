@@ -85,9 +85,9 @@ DamageContext UExecCalc_Damage::CreateDamageContext(const FGameplayEffectCustomE
 	DamageContext.SourceEffectContextHandle = DamageContext.GameplayEffectSpec->GetContext();
 
 	// Get Damage Set by Caller Magnitude for each DamageType tag
-	for (const FGameplayTag DamageTypeTag : FAuraGameplayTags::DamageTypes)
+	for (const TTuple<FGameplayTag, FGameplayTag>& DamageTypeAndResistance : FAuraGameplayTags::DamageTypesToResistances)
 	{
-		const float DamageTypeValue =  DamageContext.GameplayEffectSpec->GetSetByCallerMagnitude(DamageTypeTag);
+		const float DamageTypeValue =  DamageContext.GameplayEffectSpec->GetSetByCallerMagnitude(DamageTypeAndResistance.Key);
 		DamageContext.Damage += DamageTypeValue;
 	}
 

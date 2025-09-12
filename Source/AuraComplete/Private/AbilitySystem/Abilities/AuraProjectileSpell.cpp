@@ -47,9 +47,9 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 
 		// Pass Damage Gameplay Effect to projectile as SpecHandle to apply to target
 		const UAbilitySystemComponent* SourceAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
-
-		// Set GameplayEffectContext variables for testing
+		
 		FGameplayEffectContextHandle EffectContextHandle = SourceAbilitySystemComponent->MakeEffectContext();
+		// Set GameplayEffectContext variables for testing
 		EffectContextHandle.SetAbility(this);
 		EffectContextHandle.AddSourceObject(Projectile);
 		TArray<TWeakObjectPtr<AActor>> Actors;
@@ -60,7 +60,6 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		EffectContextHandle.AddHitResult(HitResult);
 		
 		const FGameplayEffectSpecHandle SpecHandle = SourceAbilitySystemComponent->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);
-
 		for (auto& GameplayTagAndDamageType : DamageTypes)
 		{
 			const float ScaledDamage = GameplayTagAndDamageType.Value.GetValueAtLevel(GetAbilityLevel());

@@ -22,7 +22,7 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 }
 
 /**
- * Fires the initial call for Attirbute Info on widget creation
+ * Fires the initial call for Attribute Info on widget creation
  */
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {

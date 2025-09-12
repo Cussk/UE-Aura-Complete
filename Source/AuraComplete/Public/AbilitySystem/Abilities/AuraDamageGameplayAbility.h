@@ -8,7 +8,7 @@
 #include "AuraDamageGameplayAbility.generated.h"
 
 /**
- * 
+ * Base class for Gameplay Abilities that can deal damage
  */
 UCLASS()
 class AURACOMPLETE_API UAuraDamageGameplayAbility : public UAuraGameplayAbility

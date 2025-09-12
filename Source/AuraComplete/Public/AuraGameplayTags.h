@@ -38,6 +38,12 @@ namespace FAuraGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Vitals_Health);
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Vitals_Mana);
 
+	// Resistance Attributes
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Resistance_Fire);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Resistance_Lightning);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Resistance_Arcane);
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Attributes_Resistance_Physical);
+
 	//Input Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_InputTag_LMB)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_InputTag_RMB)
@@ -46,13 +52,16 @@ namespace FAuraGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_InputTag_3)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_InputTag_4)
 
-	// Damage Tags
+	// Damage Type Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Fire)
-
-	extern TArray<FGameplayTag> DamageTypes;
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Lightning)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Arcane)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Physical)
 
 	//Anim Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Effects_HitReact)
+
+	extern TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
 };
