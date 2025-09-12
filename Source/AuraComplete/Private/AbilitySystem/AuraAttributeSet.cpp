@@ -154,7 +154,7 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& EffectProperti
 {	
 	if (EffectProperties.SourceCharacter != EffectProperties.TargetCharacter)
 	{
-		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(EffectProperties.SourceCharacter, 0)))
+		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(EffectProperties.SourceCharacter->Controller))
 		{
 			const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
 			const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);

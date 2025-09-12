@@ -11,6 +11,10 @@
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "Interaction/CombatInterface.h"
 
+/*
+ * Defines the Capture Definitions for the relevant Damage Modifiers
+ * Maps Gameplay Tag for each Modifier to its Capture Definition
+ */
 struct AuraDamageStatics
 {
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor);
@@ -77,7 +81,10 @@ UExecCalc_Damage::UExecCalc_Damage()
 	RelevantAttributesToCapture.Add(DamageStatics().PhysicalResistanceDef);
 }
 
-
+/*
+ * Calculates the Damage Modifiers and manipulates final damge
+ * Outputs final damage for GamePlay Effect to use to apply damage
+ */
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
                                               FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
