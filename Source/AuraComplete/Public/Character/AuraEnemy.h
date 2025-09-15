@@ -9,7 +9,9 @@
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
 
+class UBehaviorTree;
 class UWidgetComponent;
+class AAuraAIController;
 /**
  * Base character class for all NPC enemies
  * Blueprint versions created for enemy types
@@ -21,6 +23,7 @@ class AURACOMPLETE_API AAuraEnemy : public AAuraCharacterBase, public ITargetInt
 
 public:
 	AAuraEnemy();
+	virtual void PossessedBy(AController* NewController) override;
 	
 	virtual void Die() override;
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
@@ -60,4 +63,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
+
+	UPROPERTY()
+	TObjectPtr<AAuraAIController> AuraAIController;
+
+	UPROPERTY(EditAnywhere, Category = "AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
 };
