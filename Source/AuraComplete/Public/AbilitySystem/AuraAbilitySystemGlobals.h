@@ -19,7 +19,11 @@ public:
 	virtual FGameplayEffectContext* AllocGameplayEffectContext() const override;
 
 	// Damage Related Curves
-	inline static const FName ArmorPenetration = TEXT("ArmorPenetration");
-	inline static const FName EffectiveArmor   = TEXT("EffectiveArmor");
-	inline static const FName CriticalHitResistance = TEXT("CriticalHitResistance");
+	inline static const FName ArmorPenetrationCurve = TEXT("ArmorPenetration");
+	inline static const FName EffectiveArmorCurve   = TEXT("EffectiveArmor");
+	inline static const FName CriticalHitResistanceCurve = TEXT("CriticalHitResistance");
+
+	// Tags
+	inline static const FName EnemyTag = TEXT("Enemy");
+	inline static const FName PlayerTag = TEXT("Player");
 };

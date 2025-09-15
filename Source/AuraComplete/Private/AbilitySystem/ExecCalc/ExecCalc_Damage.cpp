@@ -185,13 +185,13 @@ void UExecCalc_Damage::ApplyArmor(const FGameplayEffectCustomExecutionParameters
 	SourceArmorPenetration = FMath::Max<float>(0.0f, SourceArmorPenetration);
 
 	const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(DamageContext.SourceAvatar);
-	const FRealCurve* ArmorPenetrationCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(UAuraAbilitySystemGlobals::ArmorPenetration, FString());
+	const FRealCurve* ArmorPenetrationCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(UAuraAbilitySystemGlobals::ArmorPenetrationCurve, FString());
 	const float ArmorPenetrationCoefficient = ArmorPenetrationCurve->Eval(DamageContext.SourceCombatInterface->GetCharacterLevel());
 
 	// Armor Penetration times the coefficient's value reduces TargetArmor 1 percent
 	const float EffectiveArmor = TargetArmor * (100 - SourceArmorPenetration * ArmorPenetrationCoefficient) / 100.f;
 
-	const FRealCurve* EffectiveArmorCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(UAuraAbilitySystemGlobals::EffectiveArmor, FString());
+	const FRealCurve* EffectiveArmorCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(UAuraAbilitySystemGlobals::EffectiveArmorCurve, FString());
 	const float EffectiveArmorCoefficient = EffectiveArmorCurve->Eval(DamageContext.TargetCombatInterface->GetCharacterLevel()); 
 
 	// Effective Armor times the coefficient's value reduces damage by 1 percent
@@ -213,7 +213,7 @@ void UExecCalc_Damage::ApplyCriticalHit(const FGameplayEffectCustomExecutionPara
 	TargetCriticalHitResistance = FMath::Max<float>(0.0f, TargetCriticalHitResistance);
 
 	const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(DamageContext.SourceAvatar);
-	const FRealCurve* CriticalHitResistanceCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(UAuraAbilitySystemGlobals::CriticalHitResistance, FString());
+	const FRealCurve* CriticalHitResistanceCurve = CharacterClassInfo->DamageCalculationsCoefficients->FindCurve(UAuraAbilitySystemGlobals::CriticalHitResistanceCurve, FString());
 	const float CriticalHitResistanceCoefficient = CriticalHitResistanceCurve->Eval(DamageContext.TargetCombatInterface->GetCharacterLevel());
 
 	// Critical Hit Resistance reduces Critical Hit Chance by a certain percentage

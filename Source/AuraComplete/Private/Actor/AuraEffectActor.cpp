@@ -4,6 +4,7 @@
 #include "Actor/AuraEffectActor.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemGlobals.h"
 
 
 AAuraEffectActor::AAuraEffectActor()
@@ -25,10 +26,11 @@ void AAuraEffectActor::BeginPlay()
  * 
  * @param TargetActor Actor to apply the effect to
  * @param GameplayEffectClass Specific Gameplay Effect to be applied
- * @param bDestroyActor Should destroy this actor or not
  */
-void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, const TSubclassOf<UGameplayEffect> GameplayEffectClass, const bool bDestroyActor)
+void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, const TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
+	if (TargetActor->ActorHasTag(FName(UAuraAbilitySystemGlobals::EnemyTag)) && !bApplyEffectToEnemies) return;
+	
 	UAbilitySystemComponent* TargetAbilitySystemComponent = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetAbilitySystemComponent == nullptr) return;
 
@@ -45,7 +47,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, const TSubclassO
 		ActiveEffectHandles.Add(ActiveGameplayEffectHandle, TargetAbilitySystemComponent);
 	}
 
-	if (bDestroyActor)
+	if (bDestroyOnEffectApplication && !bIsInfinite)
 	{
 		Destroy();
 	}
@@ -54,19 +56,19 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, const TSubclassO
 /*
  * Apply effect when this Actor's collision component is overlapping with the Target
  */
-void AAuraEffectActor::OnOverlap(AActor* TargetActor, const bool bDestroyActor)
+void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass, bDestroyActor);
+		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
 	}
 	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass, bDestroyActor);
+		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
 	}
 	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass, bDestroyActor);
+		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
 	}
 }
 
@@ -74,19 +76,19 @@ void AAuraEffectActor::OnOverlap(AActor* TargetActor, const bool bDestroyActor)
  * Apply effect when this Actor's collision component stops overlapping with the Target
  * If is an infinite effect with a Removal Policy of RemoveOnEndOverlap removes the Gameplay Effect
  */
-void AAuraEffectActor::OnEndOverlap(AActor* TargetActor, const bool bDestroyActor)
+void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass, bDestroyActor);
+		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
 	}
 	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass, bDestroyActor);
+		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
 	}
 	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
-		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass, bDestroyActor);
+		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
 	}
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
