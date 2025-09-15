@@ -26,4 +26,8 @@ public:
 	// Tags
 	inline static const FName EnemyTag = TEXT("Enemy");
 	inline static const FName PlayerTag = TEXT("Player");
+
+	//Blackboard Variables
+	inline static const FName BB_HitReacting = TEXT("bHitReacting");
+	inline static const FName BB_RangedAttacker = TEXT("bRangedAttacker");
 };
