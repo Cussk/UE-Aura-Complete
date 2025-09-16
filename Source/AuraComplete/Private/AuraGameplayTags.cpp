@@ -53,6 +53,9 @@ namespace FAuraGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage_Arcane, "Damage.Arcane", "Arcane Damage Type");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Damage_Physical, "Damage.Physical", "Physical Damage Type");
 
+	// Abilities Tags
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Abilities_Attack, "Abilities.Attack", "Attack Ability Tag");
+
 	//Anim Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Effects_HitReact, "Effects.HitReact", "Tag granted when hit reacted");
 

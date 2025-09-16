@@ -59,6 +59,9 @@ namespace FAuraGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Arcane)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Damage_Physical)
 
+	//Abilities Tags
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Abilities_Attack)
+
 	//Anim Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Effects_HitReact)
 

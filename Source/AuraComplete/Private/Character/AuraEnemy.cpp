@@ -68,7 +68,7 @@ void AAuraEnemy::BeginPlay()
 	// Server only
 	if (HasAuthority())
 	{
-		UAuraAbilitySystemLibrary::GiveStartingAbilities(this, AbilitySystemComponent);
+		UAuraAbilitySystemLibrary::GiveStartingAbilities(this, AbilitySystemComponent, CharacterClass);
 	}
 
 	if (UAuraUserWidget* AuraUserWidget = Cast<UAuraUserWidget>(HealthBar->GetUserWidgetObject()))
