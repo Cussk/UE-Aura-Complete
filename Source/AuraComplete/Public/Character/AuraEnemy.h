@@ -31,6 +31,8 @@ public:
 	/* Target Interface */
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
+	virtual AActor* GetCombatTarget_Implementation() const override;
 
 	/* Combat Interface */
 	virtual int32 GetCharacterLevel() override;
@@ -40,6 +42,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnFloatAttributeChangedSignature OnMaxHealthChanged;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	TObjectPtr<AActor> CombatTarget;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
 	bool bHitReacting = false;
