@@ -154,10 +154,18 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& EffectProperti
 {	
 	if (EffectProperties.SourceCharacter != EffectProperties.TargetCharacter)
 	{
+		const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
+		const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
+
+		// Enemy Damage Text
 		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(EffectProperties.SourceCharacter->Controller))
 		{
-			const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
-			const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
+			AuraPlayerController->ShowDamageNumber(Damage, EffectProperties.TargetCharacter, bBlockedHit, bCriticalHit);
+		}
+
+		//Player Damage Text
+		if (AAuraPlayerController* AuraPlayerController = Cast<AAuraPlayerController>(EffectProperties.TargetCharacter->Controller))
+		{
 			AuraPlayerController->ShowDamageNumber(Damage, EffectProperties.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
 	}

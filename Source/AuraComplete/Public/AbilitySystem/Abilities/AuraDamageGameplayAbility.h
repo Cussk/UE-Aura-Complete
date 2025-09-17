@@ -16,6 +16,9 @@ class AURACOMPLETE_API UAuraDamageGameplayAbility : public UAuraGameplayAbility
 	GENERATED_BODY()
 
 public:
+	
+	UFUNCTION(BlueprintCallable)
+	void CauseDamage(AActor* TargetActor);
 
 protected:
 
