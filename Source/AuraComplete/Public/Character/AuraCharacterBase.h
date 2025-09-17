@@ -26,19 +26,26 @@ class AURACOMPLETE_API AAuraCharacterBase : public ACharacter, public IAbilitySy
 
 public:
 	AAuraCharacterBase();
-	virtual void Die() override;
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MultiCastHandleDeath();
 
+	/* Ability System Interface */
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	/* Combat Interface */
+	virtual void Die() override;
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	virtual FVector GetCombatSocketLocation_Implementation() override;
+	virtual bool IsDead_Implementation() const override;
+	virtual AActor* GetAvatar_Implementation() override;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo();
 	virtual void InitializeDefaultAttributes() const;
-	virtual FVector GetCombatSocketLocation_Implementation() override;
+	
 	void ApplyEffectToSelf(const TSubclassOf<UGameplayEffect>& GameplayEffectClass, float Level = 1) const;
 	void AddCharacterAbilities() const;
 	void Dissolve();
@@ -76,6 +83,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
+
+	bool bIsDead = false;
 
 private:
 
