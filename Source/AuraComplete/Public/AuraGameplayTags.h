@@ -62,6 +62,11 @@ namespace FAuraGameplayTags
 	//Abilities Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Abilities_Attack)
 
+	//Montage Tags
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Montage_Attack_Weapon)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Montage_Attack_RightHand)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Montage_Attack_LeftHand)
+
 	//Anim Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Effects_HitReact)
 

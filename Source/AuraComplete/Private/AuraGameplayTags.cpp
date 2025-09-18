@@ -56,6 +56,11 @@ namespace FAuraGameplayTags
 	// Abilities Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Abilities_Attack, "Abilities.Attack", "Attack Ability Tag");
 
+	//Montage Tags
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_Weapon, "Montage.Attack.Weapon", "Weapon Montage Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_RightHand, "Montage.Attack.RightHand", "RightHand Montage Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_LeftHand, "Montage.Attack.LeftHand", "LeftHand Montage Tag");
+
 	//Anim Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Effects_HitReact, "Effects.HitReact", "Tag granted when hit reacted");
 
