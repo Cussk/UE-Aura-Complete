@@ -103,6 +103,10 @@ void AAuraEnemy::BeginPlay()
 void AAuraEnemy::Die()
 {
 	SetLifeSpan(LifeSpan);
+	if (AuraAIController)
+	{
+		AuraAIController->GetBlackboardComponent()->SetValueAsBool(UAuraAbilitySystemGlobals::BB_Dead, true);
+	}
 	Super::Die();
 }
 

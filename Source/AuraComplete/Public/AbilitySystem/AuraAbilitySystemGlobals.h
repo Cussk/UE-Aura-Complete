@@ -30,4 +30,5 @@ public:
 	//Blackboard Variables
 	inline static const FName BB_HitReacting = TEXT("bHitReacting");
 	inline static const FName BB_RangedAttacker = TEXT("bRangedAttacker");
+	inline static const FName BB_Dead = TEXT("bDead");
 };
