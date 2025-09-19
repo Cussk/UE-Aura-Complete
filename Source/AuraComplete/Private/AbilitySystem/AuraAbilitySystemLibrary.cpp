@@ -4,6 +4,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "AuraAbilityTypes.h"
+#include "AbilitySystem/AuraAbilitySystemGlobals.h"
 #include "Engine/OverlapResult.h"
 #include "Game/AuraGameModeBase.h"
 #include "Interaction/CombatInterface.h"
@@ -195,5 +196,13 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 			}
 		}
 	}
+}
+
+bool UAuraAbilitySystemLibrary::IsAlly(AActor* FirstActor, AActor* SecondActor)
+{
+	const bool bBothActorsArePlayers = FirstActor->ActorHasTag(UAuraAbilitySystemGlobals::PlayerTag) && SecondActor->ActorHasTag(UAuraAbilitySystemGlobals::PlayerTag);
+	const bool bBothActorsAreEnemies = FirstActor->ActorHasTag(UAuraAbilitySystemGlobals::EnemyTag) && SecondActor->ActorHasTag(UAuraAbilitySystemGlobals::EnemyTag);
+	const bool bAreAllies = bBothActorsArePlayers || bBothActorsAreEnemies;
+	return bAreAllies;
 }
 
