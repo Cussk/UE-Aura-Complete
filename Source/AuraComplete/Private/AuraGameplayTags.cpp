@@ -56,10 +56,16 @@ namespace FAuraGameplayTags
 	// Abilities Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Abilities_Attack, "Abilities.Attack", "Attack Ability Tag");
 
+	//Combat Socket Tags
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_Weapon, "CombatSocket.Weapon", "Weapon Socket Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_RightHand, "CombatSocket.RightHand", "RightHand Socket Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_LeftHand, "CombatSocket.LeftHand", "LeftHand Socket Tag");
+
 	//Montage Tags
-	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_Weapon, "Montage.Attack.Weapon", "Weapon Montage Tag");
-	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_RightHand, "Montage.Attack.RightHand", "RightHand Montage Tag");
-	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_LeftHand, "Montage.Attack.LeftHand", "LeftHand Montage Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_1, "Montage.Attack.1", "Attack 1");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_2, "Montage.Attack.2", "Attack 2");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_3, "Montage.Attack.3", "Attack 3");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_4, "Montage.Attack.4", "Attack 4");
 
 	//Anim Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Effects_HitReact, "Effects.HitReact", "Tag granted when hit reacted");
