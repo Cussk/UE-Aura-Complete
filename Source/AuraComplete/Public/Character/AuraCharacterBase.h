@@ -100,6 +100,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UNiagaraSystem* BloodEffect;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	USoundBase* DeathSound;
+
 	bool bIsDead = false;
 
 private:
