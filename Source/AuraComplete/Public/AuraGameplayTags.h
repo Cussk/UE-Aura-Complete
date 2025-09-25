@@ -66,6 +66,7 @@ namespace FAuraGameplayTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_CombatSocket_Weapon)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_CombatSocket_RightHand)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_CombatSocket_LeftHand)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_CombatSocket_Tail)
 
 	//Montage Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Montage_Attack_1)

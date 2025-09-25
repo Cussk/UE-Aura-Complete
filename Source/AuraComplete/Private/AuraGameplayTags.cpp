@@ -60,6 +60,7 @@ namespace FAuraGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_Weapon, "CombatSocket.Weapon", "Weapon Socket Tag");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_RightHand, "CombatSocket.RightHand", "RightHand Socket Tag");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_LeftHand, "CombatSocket.LeftHand", "LeftHand Socket Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_Tail, "CombatSocket.Tail", "Tail Socket Tag");
 
 	//Montage Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Montage_Attack_1, "Montage.Attack.1", "Attack 1");
