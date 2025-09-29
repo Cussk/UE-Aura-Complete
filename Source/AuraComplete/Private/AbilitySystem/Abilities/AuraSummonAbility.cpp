@@ -15,7 +15,16 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations(bool IsDebug)
 	for (int32 i = 0; i < NumberMinions; i++)
 	{
 		const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
-		const FVector ChosenSpawnLocation = Location + Direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
+		FVector ChosenSpawnLocation = Location + Direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
+
+		//Make sure spawn point is on the ground, not above or below
+		FHitResult Hit;
+		GetWorld()->LineTraceSingleByChannel(Hit, ChosenSpawnLocation + FVector(0.f, 0.f, 400.f), ChosenSpawnLocation + FVector(0.f, 0.f, -400.f), ECC_Visibility);
+		if (Hit.bBlockingHit)
+		{
+			ChosenSpawnLocation = Hit.ImpactPoint;
+		}
+		
 		SpawnLocations.Add(ChosenSpawnLocation);
 
 		ShouldDrawDebugShapes(IsDebug, Location, Direction, ChosenSpawnLocation);
