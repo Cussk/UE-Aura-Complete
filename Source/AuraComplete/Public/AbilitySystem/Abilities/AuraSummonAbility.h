@@ -16,7 +16,7 @@ class AURACOMPLETE_API UAuraSummonAbility : public UAuraGameplayAbility
 
 public:
 	UFUNCTION(BlueprintCallable)
-	TArray<FVector> GetSpawnLocations(bool IsDebug);
+	TArray<FVector> GetSpawnLocations(bool bIsDebug);
 
 	UFUNCTION(BlueprintPure, Category = "Summoning")
 	TSubclassOf<APawn> GetRandomMinionClass();
@@ -37,5 +37,5 @@ public:
 	float SpawnSpread = 90.f;
 
 private:
-	void DrawDebugShapes(bool IsDebug, const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const;
+	void DrawDebugShapes(const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const;
 };

@@ -4,7 +4,7 @@
 #include "AbilitySystem/Abilities/AuraSummonAbility.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-TArray<FVector> UAuraSummonAbility::GetSpawnLocations(bool IsDebug)
+TArray<FVector> UAuraSummonAbility::GetSpawnLocations(bool bIsDebug)
 {
 	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector();
 	const FVector Location = GetAvatarActorFromActorInfo()->GetActorLocation();
@@ -27,7 +27,10 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations(bool IsDebug)
 		
 		SpawnLocations.Add(ChosenSpawnLocation);
 
-		DrawDebugShapes(IsDebug, Location, Direction, ChosenSpawnLocation);
+		if (bIsDebug)
+		{
+			DrawDebugShapes(Location, Direction, ChosenSpawnLocation);
+		}
 	}
 
 	return SpawnLocations;
@@ -39,13 +42,11 @@ TSubclassOf<APawn> UAuraSummonAbility::GetRandomMinionClass()
 	return MinionClasses[RandomIndex];
 }
 
-void UAuraSummonAbility::DrawDebugShapes(const bool IsDebug, const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const
+void UAuraSummonAbility::DrawDebugShapes(const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const
 {
-	if (IsDebug)
-	{
-		DrawDebugSphere(GetWorld(), ChosenSpawnLocation, 18.f, 12, FColor::Cyan, false, 3.f);
-		UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), Location, Location + Direction * MaxSpawnDistance, 4.f, FLinearColor::Green, 3);
-		DrawDebugSphere(GetWorld(), Location + Direction * MinSpawnDistance, 5.f, 12, FColor::Red, false, 3.f);
-		DrawDebugSphere(GetWorld(), Location + Direction * MaxSpawnDistance, 5.f, 12, FColor::Red, false, 3.f);
-	}
+	
+	DrawDebugSphere(GetWorld(), ChosenSpawnLocation, 18.f, 12, FColor::Cyan, false, 3.f);
+	UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo(), Location, Location + Direction * MaxSpawnDistance, 4.f, FLinearColor::Green, 3);
+	DrawDebugSphere(GetWorld(), Location + Direction * MinSpawnDistance, 5.f, 12, FColor::Red, false, 3.f);
+	DrawDebugSphere(GetWorld(), Location + Direction * MaxSpawnDistance, 5.f, 12, FColor::Red, false, 3.f);
 }
