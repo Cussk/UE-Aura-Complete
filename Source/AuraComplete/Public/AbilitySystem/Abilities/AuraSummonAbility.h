@@ -18,6 +18,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<FVector> GetSpawnLocations(bool IsDebug);
 
+	UFUNCTION(BlueprintPure, Category = "Summoning")
+	TSubclassOf<APawn> GetRandomMinionClass();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Summoning")
 	int32 NumberMinions = 5;
 
@@ -34,5 +37,5 @@ public:
 	float SpawnSpread = 90.f;
 
 private:
-	void ShouldDrawDebugShapes(bool IsDebug, const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const;
+	void DrawDebugShapes(bool IsDebug, const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const;
 };

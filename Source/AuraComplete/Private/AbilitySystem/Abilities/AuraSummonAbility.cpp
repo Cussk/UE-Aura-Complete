@@ -27,13 +27,19 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations(bool IsDebug)
 		
 		SpawnLocations.Add(ChosenSpawnLocation);
 
-		ShouldDrawDebugShapes(IsDebug, Location, Direction, ChosenSpawnLocation);
+		DrawDebugShapes(IsDebug, Location, Direction, ChosenSpawnLocation);
 	}
 
 	return SpawnLocations;
 }
 
-void UAuraSummonAbility::ShouldDrawDebugShapes(const bool IsDebug, const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const
+TSubclassOf<APawn> UAuraSummonAbility::GetRandomMinionClass()
+{
+	const int32 RandomIndex = FMath::RandRange(0,  MinionClasses.Num() - 1);
+	return MinionClasses[RandomIndex];
+}
+
+void UAuraSummonAbility::DrawDebugShapes(const bool IsDebug, const FVector& Location, const FVector& Direction, const FVector& ChosenSpawnLocation) const
 {
 	if (IsDebug)
 	{
