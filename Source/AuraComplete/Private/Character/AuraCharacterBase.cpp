@@ -132,6 +132,11 @@ void AAuraCharacterBase::Dissolve()
 	}
 }
 
+void AAuraCharacterBase::ModifyMinionCount_Implementation(const int32 Amount)
+{
+	MinionCount += Amount;
+}
+
 /* GETTERS */
 
 UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
@@ -197,6 +202,11 @@ FTaggedMontage AAuraCharacterBase::GetTaggedMontageByTag_Implementation(const FG
 	}
 
 	return FTaggedMontage();
+}
+
+int32 AAuraCharacterBase::GetMinionCount_Implementation()
+{
+	return MinionCount;
 }
 
 

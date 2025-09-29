@@ -55,6 +55,7 @@ namespace FAuraGameplayTags
 
 	// Abilities Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Abilities_Attack, "Abilities.Attack", "Attack Ability Tag");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_Abilities_Summon, "Abilities.Summon", "Summon Ability Tag");
 
 	//Combat Socket Tags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(FAuraGameplayTags::TAG_CombatSocket_Weapon, "CombatSocket.Weapon", "Weapon Socket Tag");

@@ -61,6 +61,7 @@ namespace FAuraGameplayTags
 
 	//Abilities Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Abilities_Attack)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_Abilities_Summon)
 
 	//Combat Socket Tags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(TAG_CombatSocket_Weapon)
