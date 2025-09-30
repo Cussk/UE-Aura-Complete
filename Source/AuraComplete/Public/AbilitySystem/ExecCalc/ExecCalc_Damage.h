@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AuraAbilityTypes.h"
 #include "GameplayEffectExecutionCalculation.h"
 #include "ExecCalc_Damage.generated.h"
 
